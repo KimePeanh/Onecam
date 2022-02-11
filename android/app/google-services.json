@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1062170125890",
+    "project_id": "clothes-df439",
+    "storage_bucket": "clothes-df439.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062170125890:android:b16529cf48e2e58eefafdb",
+        "android_client_info": {
+          "package_name": "com.example.buymee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062170125890-npsg31l20cgcejruopcf56us2inhpi5s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.buymee",
+            "certificate_hash": "a1c3ae7d9ebec41efaafd1652c175cc9b1d9d146"
+          }
+        },
+        {
+          "client_id": "1062170125890-dapb1otlthmsg68c447listfadcuufum.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl_d04Ce6XHhDkWsdPfuqZXXWezCanbpI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062170125890-dapb1otlthmsg68c447listfadcuufum.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
