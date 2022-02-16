@@ -1,3 +1,4 @@
+import 'package:buymee/Auth/testlocation.dart';
 import 'package:buymee/Home.dart';
 import 'package:buymee/Splash.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
-      home: Splash(),
+      home: Testloca(),
     );
   }
 }

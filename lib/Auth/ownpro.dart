@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:geolocator/geolocator.dart';
@@ -22,12 +23,25 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  var location = [];
+  var Helplocation = [];
+  var _firebaseInstance = FirebaseFirestore.instance;
   Position? _position;
   String? _currentlocation;
   bool isLoading = false;
-  double lat = 11.99339;
-  double lng = 105.4635;
+  double? lat;
+  double? lng;
   Set<Marker> _marker = {};
+  void eytt() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    print(position.latitude);
+    Helplocation.add(position.latitude as double);
+    Helplocation.add(position.longitude as double);
+    print(Helplocation);
+  }
+  
+
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -73,37 +87,39 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   void createmap(GoogleMapController controller) {
-    setState(() {
-      print(lat);
-      _marker.add(
-        Marker(
-            markerId: MarkerId('id-1'),
-            position: LatLng(lat, lng),
-            infoWindow: InfoWindow(
-              title: 'kime',
-            )),
-      );
-    });
+    // setState(() {
+    //   print(lat);
+    //   // _marker.add(
+    //   //   Marker(
+    //   //       markerId: MarkerId('id-1'),
+    //   //       position: LatLng(lat, lng),
+    //   //       infoWindow: InfoWindow(
+    //   //         title: 'kime',
+    //   //       )),
+    //   // );
+    // });
   }
 
-  void ll() async {
-    Position position = await _determinePosition();
-    setState(() {
-      lat = position.latitude;
-      lng = position.longitude;
-      print(lat);
-      print(lng);
-    });
-  }
+  // void ll() async {
+  //   Position position = await getposition();
+  //   setState(() {
+  //     lat = position.latitude;
+  //     lng = position.longitude;
+  //     print(lat);
+  //     print(lng);
+  //   });
+  // }
 
   void btclick() async {
-    Position position = await _determinePosition();
     setState(() {
       if (bt == "My Location") {
         setState(() {
-          lat = position.latitude;
-          lng = position.longitude;
-          print("Latttttttttttttttttttt: " + lat.toString());
+          //location.add()
+          eytt();
+          getLocation();
+          print("Help locationnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+          print(Helplocation);
+          print(Helplocation[0]);
         });
         setState(() {
           bt = "Help";
@@ -122,7 +138,6 @@ class _UserProfileState extends State<UserProfile> {
     });
   }
 
-  void latlng() {}
   String bt = "My Location";
   late GoogleMapController mapController;
   //LatLng location = LatLng(35.68, 51.41);
@@ -131,16 +146,57 @@ class _UserProfileState extends State<UserProfile> {
     mapController = controller;
   }
 
+  void getLocation() async {
+    QuerySnapshot qn = await _firebaseInstance.collection("AllUsers").get();
+    FirebaseFirestore.instance
+        .collection("AllUsers")
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        if (doc["Phonenumber"] == widget.phone) {
+          setState(() {
+            location = doc["location"];
+            //Helplocation = location;
+            print("Here location");
+            print(location);
+            if (Helplocation.isEmpty) {
+              setState(() {
+                print("Help empty");
+                print(location[0] as double);
+                lat = location[0] as double;
+                lng = location[1] as double;
+                print("LAt afert location[0");
+                print(lat);
+                print(lng);
+                print("LAt afert location[0");
+              });
+            } else {
+              setState(() {
+                print("Noooooooooooooo");
+                lat = Helplocation[0] as double;
+                lng = Helplocation[1] as double;
+              });
+            }
+          });
+        }
+      });
+    });
+  }
+
   @override
   void initState() {
     //_getCurrentLocation();
-    ll();
+    print(widget.phone);
+    //ll();
+    getLocation();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    LatLng _center = LatLng(11.5649, 104.9122);
+    LatLng _center = LatLng(lat!, lng!);
+    print("Lat in wedgit");
+    print(lat);
     return ScreenUtilInit(
       builder: () => Scaffold(
         appBar: AppBar(
@@ -239,11 +295,12 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ),
                       onTap: () async {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        _position = await getposition();
-                        //_getCurrentLocation();
+                        eytt();
+                        // setState(() {
+                        //   isLoading = true;
+                        // });
+                        // _position = await _determinePosition();
+                        // print(_position!.accuracy);
                       },
                     ),
                     SizedBox(
@@ -280,9 +337,9 @@ class _UserProfileState extends State<UserProfile> {
                     height: 430.h,
                     color: Colors.amber,
                     child: GoogleMap(
-                      onMapCreated: createmap,
+                      //onMapCreated: GoogleMapController(),
                       initialCameraPosition: CameraPosition(
-                        target: LatLng(lat, lng),
+                        target: _center,
                         zoom: 15.0,
                       ),
                     ),
