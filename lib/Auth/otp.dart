@@ -94,30 +94,30 @@ class _LoginOtpState extends State<LoginOtp> {
                 SizedBox(
                   height: 70.h,
                 ),
-                InkWell(
-                  child: Container(
-                    width: 266.w,
-                    height: 52.h,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Color.fromRGBO(231, 11, 11, 1.0),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            offset: Offset(0, 2),
-                          )
-                        ]),
-                    child: Text(
-                      widget.state,
-                      style: TextStyle(
-                          fontSize: 17.sp,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  onTap: () async {},
-                ),
+                // InkWell(
+                //   child: Container(
+                //     width: 266.w,
+                //     height: 52.h,
+                //     alignment: Alignment.center,
+                //     decoration: BoxDecoration(
+                //         color: Color.fromRGBO(231, 11, 11, 1.0),
+                //         borderRadius: BorderRadius.circular(10),
+                //         boxShadow: [
+                //           BoxShadow(
+                //             color: Colors.grey.withOpacity(0.3),
+                //             offset: Offset(0, 2),
+                //           )
+                //         ]),
+                //     child: Text(
+                //       widget.state,
+                //       style: TextStyle(
+                //           fontSize: 17.sp,
+                //           color: Colors.white,
+                //           fontWeight: FontWeight.bold),
+                //     ),
+                //   ),
+                //   onTap: () async {},
+                // ),
               ],
             ),
           ),
